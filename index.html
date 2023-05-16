@@ -84,32 +84,32 @@
       //    * If the profile is active but it has a `reason` prop, return the string "confirm status manually"
       //    * If the profile is **missing** an `active` prop, return the string "impossible to ascertain status"
       function profileActivation(profile, reason) {
-  if (typeof profile !== 'object') {
-    return "Profile argument must be an object";
-  }
+      if (typeof profile !== 'object') {
+        return "Profile argument must be an object";
+      }
 
-  if (!profile.hasOwnProperty('active')) {
-    return "impossible to ascertain status";
-  }
+      if (!profile.hasOwnProperty('active')) {
+        return "impossible to ascertain status";
+      }
+      
+      if (profile.active) {
+      if (profile.hasOwnProperty('reason')) {
+        return "confirm status manually";
+      } else {
+        delete profile.reason;
+        profile.active = false;
+        profile.reason = reason;
+      }
+      } else {
+      if (!profile.hasOwnProperty('reason')) {
+        return "confirm status manually";
+      }
+        delete profile.reason;
+        profile.active = true;
+      }
 
-  if (profile.active) {
-    if (profile.hasOwnProperty('reason') && profile.reason !== '') {
-      return "confirm status manually";
-    } else {
-      delete profile.reason;
-      profile.active = false;
-      profile.reason = reason;
+      return profile;
     }
-  } else {
-    if (!profile.hasOwnProperty('reason')) {
-      return "confirm status manually";
-    }
-    delete profile.reason;
-    profile.active = true;
-  }
-
-  return profile;
-}
 
 
 
